@@ -17,6 +17,7 @@ tmp/
 .agents/
 .specify/*
 !.specify/memory/
+.specify/memory/*
 !.specify/memory/constitution.md
 .worktrees/
 worktrees/
