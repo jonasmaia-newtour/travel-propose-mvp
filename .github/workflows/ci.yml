@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+    branches-ignore:
+      - main
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check scaffold availability
+        id: scaffold
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            echo "has_package=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_package=false" >> "$GITHUB_OUTPUT"
+            echo "No package.json found; scaffold has not been created yet."
+          fi
+
+      - name: Install dependencies
+        if: steps.scaffold.outputs.has_package == 'true'
+        run: npm ci
+
+      - name: Lint
+        if: steps.scaffold.outputs.has_package == 'true'
+        run: npm run lint
+
+      - name: Type check
+        if: steps.scaffold.outputs.has_package == 'true'
+        run: npm run typecheck
+
+      - name: Test
+        if: steps.scaffold.outputs.has_package == 'true'
+        run: npm run test
