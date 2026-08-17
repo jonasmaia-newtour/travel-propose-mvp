@@ -1,0 +1,30 @@
+# Dependências e artefactos locais
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+
+# Segredos e configuração local
+.env
+.env.*
+!.env.example
+
+# Trabalho temporário e sessões de ferramentas
+tmp/
+.superpowers/
+.agents/
+.specify/*
+!.specify/memory/
+!.specify/memory/constitution.md
+.worktrees/
+worktrees/
+
+# Documentos-fonte já consolidados em AGENTS.md
+*.pdf
+
+# Sistema operativo e editor
+.DS_Store
+Thumbs.db
+.vscode/
