@@ -16,11 +16,11 @@ o mínimo e confirmar sucesso.
 
 ## Phase 2: Scaffold e qualidade base
 
-- [ ] T005 Criar aplicação Next.js TypeScript no diretório raiz conforme `specs/001-travel-propose-mvp/plan.md`
-- [ ] T006 Configurar Tailwind, shadcn/ui e tokens corporativos em `app/globals.css` e `components.json`
-- [ ] T007 [P] Configurar Vitest em `vitest.config.ts` e `tests/setup.ts`
-- [ ] T008 [P] Configurar Playwright e axe em `playwright.config.ts` e `tests/e2e/accessibility.spec.ts`
-- [ ] T009 Configurar scripts de lint, typecheck, teste e E2E em `package.json`
+- [x] T005 Criar aplicação Next.js TypeScript no diretório raiz conforme `specs/001-travel-propose-mvp/plan.md`
+- [x] T006 Configurar Tailwind, shadcn/ui e tokens corporativos em `app/globals.css` e `components.json`
+- [x] T007 [P] Configurar Vitest em `vitest.config.ts` e `tests/setup.ts`
+- [x] T008 [P] Configurar Playwright e axe em `playwright.config.ts` e `tests/e2e/accessibility.spec.ts`
+- [x] T009 Configurar scripts de lint, typecheck, teste e E2E em `package.json`
 
 ## Phase 3: Supabase e ambiente
 
