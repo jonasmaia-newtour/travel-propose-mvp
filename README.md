@@ -10,10 +10,28 @@ Next.js, TypeScript, Tailwind CSS, shadcn/ui e Supabase.
 
 ## Arranque
 
-As instruções de instalação e execução serão adicionadas quando a Fase 2 criar a
-aplicação. Consultar `AGENTS.md` para contexto e `specs/001-travel-propose-mvp/` para
-especificação, plano e tarefas.
+Requisitos: Node.js 24 e npm.
+
+```powershell
+npm.cmd ci
+npm.cmd run dev
+```
+
+A aplicação fica disponível em `http://localhost:3000`. Consultar `AGENTS.md` para
+contexto e `specs/001-travel-propose-mvp/` para especificação, plano e tarefas.
 
 ## Qualidade
 
-Antes de cada PR: lint, verificação de tipos, testes relevantes e `git diff --staged`.
+Antes de cada PR:
+
+```powershell
+npm.cmd run lint
+npm.cmd run typecheck
+npm.cmd run test -- --run
+npx.cmd playwright install chromium
+npm.cmd run test:e2e
+npm.cmd audit --audit-level=high
+```
+
+No Windows sandboxed, o E2E pode precisar de permissão elevada para o Playwright
+encerrar o servidor Next. Inspecionar sempre `git diff --staged` antes do commit.
