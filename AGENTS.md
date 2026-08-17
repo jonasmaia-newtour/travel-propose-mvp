@@ -86,3 +86,36 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 - Componentes acessíveis, semânticos e navegáveis por teclado; cumprir WCAG AA.
 - Testes unitários para preços, estados, validade e snapshots; integração para RLS; E2E Playwright para login, publicação, simulação, pedido de ajuste, aprovação e expiração.
 - Executar lint, verificação de tipos e testes antes de declarar uma entrega concluída.
+
+## Protocolo operacional acordado
+
+- Antes de cada PR, executar code review local independente e resolver achados bloqueantes ou importantes antes de abrir a PR.
+- Títulos e descrições de PR são sempre escritos em PT-PT.
+- Comunicar explicitamente o estado do trabalho: a executar, em validação, bloqueado à espera de decisão, ou concluído. Interromper e diagnosticar operações que excedam o tempo razoável para a tarefa.
+- Registar no `tasks.md` o estado concluído de cada fase e, no fim da fase, deixar anotadas as validações realizadas, decisões relevantes e a próxima fase para permitir retoma numa sessão nova.
+- Registar em `LEARNINGS.md`, assim que resolvido, cada erro reutilizável no formato curto: erro, causa e solução.
+- Alterações ao Supabase exigem aprovação explícita imediatamente antes da alteração, depois de confirmar por leitura que a CLI aponta para o projeto `travel-propose-mvp`.
+- O CLI da Vercel está disponível. Deploys deste projeto usam a equipa `jonasmaia-mvp` e só devem partir de `main` validada pela CI, salvo autorização explícita para um preview.
+
+## Aprendizagens do ambiente
+
+- Em PowerShell, usar `npm.cmd` e `npx.cmd`, porque a política de execução pode bloquear os wrappers `.ps1`.
+- O repositório raiz contém documentação antes do scaffold; ferramentas que exigem diretório vazio devem gerar numa pasta temporária isolada e trazer apenas os artefactos necessários.
+- O template padrão do Next.js inclui fontes Google, copy e links externos. Removê-los no bootstrap: builds não podem depender de fontes remotas e a interface não pode manter copy de template nem cores de marca fora de tokens.
+- O teardown do `webServer` do Playwright usa `taskkill /T /F` no Windows. No sandbox local, executar o E2E com permissão elevada; na CI Linux o Playwright encerra o grupo com `SIGKILL`.
+
+## Estado da implementação
+
+- Fase 1: concluída e integrada em `main`.
+- Fase 2: implementada, validada e aprovada em code review; aguarda PR e integração em `main`.
+- Próxima fase após o merge: Fase 3 — Supabase e ambiente, começando pela confirmação read-only do projeto `travel-propose-mvp`. Nenhum write no Supabase sem aprovação explícita.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
