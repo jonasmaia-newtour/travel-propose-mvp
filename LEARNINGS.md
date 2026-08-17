@@ -23,5 +23,6 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 - **Instalação npm fica sem resposta** — causa: falha transitória de rede; solução: diagnosticar com `npm.cmd view`, usar timeout e retries limitados e não esperar indefinidamente.
 - **Vitest avisa sobre ESM** — causa: configuração ESM carregada como CommonJS; solução: declarar `"type": "module"` no `package.json`.
 - **Vitest tenta executar testes Playwright** — causa: padrão global recolhe `tests/e2e`; solução: limitar `test.include` aos testes unitários no `vitest.config.ts`.
+- **Typecheck local passa e falha na CI com `LayoutProps`** — causa: `.next` local contém tipos globais gerados que não existem numa instalação limpa; solução: tipar o layout explicitamente com `ReactNode` e validar sem `.next`.
 - **axe falha na página vazia** — causa: ausência de `<title>` e `<h1>`; solução: criar baseline acessível mínimo antes da landing completa.
 - **E2E passa, mas não encerra no sandbox Windows** — causa: Playwright usa `taskkill /T /F` no teardown e o sandbox bloqueia a operação; solução: executar localmente com permissão elevada. Na CI Linux, o Playwright termina o grupo com `SIGKILL`.
