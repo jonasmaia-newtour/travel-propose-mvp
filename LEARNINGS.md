@@ -8,6 +8,7 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 - **Git recusa worktree com `dubious ownership`** — causa: worktree criado pelo utilizador e executado no sandbox; solução: adicionar apenas o caminho exato a `safe.directory`.
 - **Scripts Superpowers não executam** — causa: Bash indisponível no Windows; solução: reproduzir o protocolo manualmente com workspace ignorado, briefs, relatórios e ledger.
 - **Branch Protection e Rulesets retornam 403** — causa: repositório privado sem GitHub Pro; solução: manter PR+CI como gate operacional até atualizar o plano, sem tornar o repositório público.
+- **GitHub CLI alterna 503/404** — causa possível: incidente em API/Actions; solução: consultar `githubstatus.com` antes de repetir chamadas, mas ainda inspecionar logs porque uma falha real pode coexistir com a indisponibilidade.
 
 ## Next.js e interface
 
