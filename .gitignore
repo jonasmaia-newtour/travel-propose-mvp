@@ -24,6 +24,7 @@ worktrees/
 
 # Documentos-fonte já consolidados em AGENTS.md
 *.pdf
+*.tsbuildinfo
 
 # Sistema operativo e editor
 .DS_Store
