@@ -95,6 +95,7 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 - Registar no `tasks.md` o estado concluído de cada fase e, no fim da fase, deixar anotadas as validações realizadas, decisões relevantes e a próxima fase para permitir retoma numa sessão nova.
 - Registar em `LEARNINGS.md`, assim que resolvido, cada erro reutilizável no formato curto: erro, causa e solução.
 - Alterações ao Supabase exigem aprovação explícita imediatamente antes da alteração, depois de confirmar por leitura que a CLI aponta para o projeto `travel-propose-mvp`.
+- O CLI da Vercel está disponível. Deploys deste projeto usam a equipa `jonasmaia-mvp` e só devem partir de `main` validada pela CI, salvo autorização explícita para um preview.
 
 ## Aprendizagens do ambiente
 
@@ -106,7 +107,7 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 ## Estado da implementação
 
 - Fase 1: concluída e integrada em `main`.
-- Fase 2: implementada e validada; aguarda revisão final, PR e integração em `main`.
+- Fase 2: implementada, validada e aprovada em code review; aguarda PR e integração em `main`.
 - Próxima fase após o merge: Fase 3 — Supabase e ambiente, começando pela confirmação read-only do projeto `travel-propose-mvp`. Nenhum write no Supabase sem aprovação explícita.
 
 <!-- BEGIN:nextjs-agent-rules -->
