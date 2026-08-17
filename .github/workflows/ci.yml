@@ -34,6 +34,10 @@ jobs:
         if: steps.scaffold.outputs.has_package == 'true'
         run: npm ci
 
+      - name: Audit dependencies
+        if: steps.scaffold.outputs.has_package == 'true'
+        run: npm audit --audit-level=high
+
       - name: Lint
         if: steps.scaffold.outputs.has_package == 'true'
         run: npm run lint
