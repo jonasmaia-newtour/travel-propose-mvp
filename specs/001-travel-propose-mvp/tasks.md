@@ -9,10 +9,10 @@ o mínimo e confirmar sucesso.
 
 ## Phase 1: Governança e repositório
 
-- [ ] T001 Criar repositório Git e configurar branch `main` no diretório raiz
-- [ ] T002 Criar `.gitignore`, `.gitattributes`, `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CODEOWNERS` e `.env.example`
-- [ ] T003 Criar `.github/PULL_REQUEST_TEMPLATE.md` e workflow `.github/workflows/ci.yml`
-- [ ] T004 Criar repositório privado GitHub e associar `origin` após revisão de `git diff --staged`
+- [x] T001 Criar repositório Git e configurar branch `main` no diretório raiz
+- [x] T002 Criar `.gitignore`, `.gitattributes`, `README.md`, `CONTRIBUTING.md`, `SECURITY.md`, `CODEOWNERS` e `.env.example`
+- [x] T003 Criar `.github/PULL_REQUEST_TEMPLATE.md` e workflow `.github/workflows/ci.yml`
+- [x] T004 Criar repositório privado GitHub e associar `origin` após revisão de `git diff --staged`
 
 ## Phase 2: Scaffold e qualidade base
 
