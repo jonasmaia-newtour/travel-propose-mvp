@@ -1,0 +1,6 @@
+-- Seed inicial do TravelPropose MVP
+-- Fase 3: ficheiro placeholder — dados reais são adicionados na Fase 4 (identidade e multi-tenancy).
+-- Este ficheiro será expandido com: organização newtour-test, utilizadores de demonstração
+-- (Owner, Manager, Agent) e proposta de exemplo (Fase 11).
+--
+-- Aprovação explícita do utilizador necessária antes de qualquer escrita neste ficheiro.
