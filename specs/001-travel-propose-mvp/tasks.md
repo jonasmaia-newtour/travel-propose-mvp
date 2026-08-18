@@ -24,10 +24,10 @@ o mínimo e confirmar sucesso.
 
 ## Phase 3: Supabase e ambiente
 
-- [ ] T010 Confirmar por leitura que a CLI Supabase está ligada ao projeto `travel-propose-mvp` antes de qualquer write
-- [ ] T011 Criar estrutura local `supabase/config.toml`, `supabase/migrations/` e `supabase/seed.sql` após aprovação explícita do utilizador
-- [ ] T012 Documentar variáveis em `.env.example` e validação de arranque em `lib/env.ts`
-- [ ] T013 Criar teste de configuração em `tests/unit/env.spec.ts`
+- [x] T010 Confirmar por leitura que a CLI Supabase está ligada ao projeto `travel-propose-mvp` antes de qualquer write
+- [x] T011 Criar estrutura local `supabase/config.toml`, `supabase/migrations/` e `supabase/seed.sql` após aprovação explícita do utilizador
+- [x] T012 Documentar variáveis em `.env.example` e validação de arranque em `lib/env.ts`
+- [x] T013 Criar teste de configuração em `tests/unit/env.spec.ts`
 
 ## Phase 4: Fundação multi-tenant e autenticação
 
