@@ -31,6 +31,10 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 - **`typeof window` como guarda de servidor falha em jsdom** — causa: o ambiente jsdom do Vitest define `window`, fazendo a guarda rejeitar todas as chamadas a funções de servidor; solução: remover a guarda de runtime e confiar em convenção de nomenclatura + TypeScript.
 - **`NODE_ENV` é `readonly` em `NodeJS.ProcessEnv`** — causa: `@types/node` declara `NODE_ENV` como readonly, impedindo atribuição direta nos testes; solução: fazer cast para `Record<string, string | undefined>` — ex: `(process.env as MutableEnv)['NODE_ENV'] = 'test'`.
 
+## Git e protocolo de entrega
+
+- **Push direto em `main` é proibido** — causa: trabalho feito sem criar worktree e branch de feature; solução: antes de qualquer fase, criar `git worktree add .worktrees/<branch> -b <branch>`, trabalhar nesse worktree, abrir PR, aguardar CI verde e fazer squash merge. O `.worktrees/` já existe e está no `.gitignore`.
+
 ## Supabase e infraestrutura
 
 - **Sequência obrigatória: `supabase init` antes de `supabase link`** — causa: `supabase link` pressupõe `config.toml` local; sem ele o comando falha; solução: executar `supabase init` primeiro para gerar a estrutura local, depois `supabase link --project-ref <ref>`.
