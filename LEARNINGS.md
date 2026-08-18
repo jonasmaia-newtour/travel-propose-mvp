@@ -27,3 +27,11 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 - **Typecheck local passa e falha na CI com `LayoutProps`** — causa: `.next` local contém tipos globais gerados que não existem numa instalação limpa; solução: tipar o layout explicitamente com `ReactNode` e validar sem `.next`.
 - **axe falha na página vazia** — causa: ausência de `<title>` e `<h1>`; solução: criar baseline acessível mínimo antes da landing completa.
 - **E2E passa, mas não encerra no sandbox Windows** — causa: Playwright usa `taskkill /T /F` no teardown e o sandbox bloqueia a operação; solução: executar localmente com permissão elevada. Na CI Linux, o Playwright termina o grupo com `SIGKILL`.
+- **Zod `result.error.errors` vs `result.error.issues`** — causa: Zod v3+ usa a propriedade `.issues` (não `.errors`); aceder a `.errors` lança `Cannot read properties of undefined`; solução: usar sempre `result.error.issues`.
+- **`typeof window` como guarda de servidor falha em jsdom** — causa: o ambiente jsdom do Vitest define `window`, fazendo a guarda rejeitar todas as chamadas a funções de servidor; solução: remover a guarda de runtime e confiar em convenção de nomenclatura + TypeScript.
+- **`NODE_ENV` é `readonly` em `NodeJS.ProcessEnv`** — causa: `@types/node` declara `NODE_ENV` como readonly, impedindo atribuição direta nos testes; solução: fazer cast para `Record<string, string | undefined>` — ex: `(process.env as MutableEnv)['NODE_ENV'] = 'test'`.
+
+## Supabase e infraestrutura
+
+- **Sequência obrigatória: `supabase init` antes de `supabase link`** — causa: `supabase link` pressupõe `config.toml` local; sem ele o comando falha; solução: executar `supabase init` primeiro para gerar a estrutura local, depois `supabase link --project-ref <ref>`.
+- **`supabase link` não exige password da base de dados** — causa: o link apenas associa o `project_ref` ao diretório local; a password só é necessária para operações de migração direta; solução: `supabase link --project-ref <ref>` é suficiente para configurar o ambiente local.
