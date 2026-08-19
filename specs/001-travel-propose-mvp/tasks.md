@@ -76,15 +76,17 @@ o mínimo e confirmar sucesso.
 - [x] T027 [US4] Criar layout e navegação autenticados em `app/(dashboard)/layout.tsx`
 - [x] T028 [US4] Criar queries paginadas do pipeline em `lib/proposals/dashboard-queries.ts`
 - [x] T029 [US4] Implementar dashboard e kanban em `app/(dashboard)/dashboard/page.tsx` e `components/dashboard/`
-- [ ] T030 [US4] Validar Owner, Manager e Agent com Playwright
+- [x] T030 [US4] Validar Owner, Manager e Agent com Playwright
 
-> Fase 6 entregue em três PRs: 6a (tipos DB gerados + redirect login, PR #13),
-> 6b (layout, queries e kanban, PR #14) e 6c (E2E RBAC + env vars na CI).
-> T030 fica concluído quando o E2E correr verde na CI (requer os secrets
-> `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` no repositório).
-> Nota: o Agent (MEMBER) é limitado às próprias propostas no nível da aplicação;
-> a policy RLS `proposals_read_own_org` continua a permitir leitura de tenant
-> para todos os papéis (apertar RLS por papel fica registado para revisão).
+> Fase 6 entregue em três PRs: 6a (tipos DB + redirect login, #13), 6b (layout,
+> queries e kanban, #14) e 6c (E2E RBAC + env vars na CI, #15). T030 validado:
+> E2E verde na CI com login real dos três papéis e separação de visão (Agent só
+> as próprias). Notas: (1) o Agent é limitado às próprias propostas na aplicação;
+> a policy RLS `proposals_read_own_org` continua a permitir leitura de tenant a
+> todos os papéis (apertar por papel fica para revisão); (2) `requireUser()` usa
+> `connection()` para forçar rendering dinâmico e evitar que `/dashboard` seja
+> pré-renderizado sem env vars no build.
+> Próxima fase: Fase 7 — criador e publicação (US1), T031 a T035.
 
 ## Phase 7: Criador e publicação (US1)
 
