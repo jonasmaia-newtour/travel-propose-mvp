@@ -111,11 +111,12 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 - Fase 3: concluída e integrada em `main` (estrutura Supabase, `.env.example`, `lib/env.ts`).
 - Fase 4: concluída (T014 a T019) — fundação multi-tenant, seed e autenticação
   (clientes Supabase, proxy, login e guardas RBAC) integrados em `main`.
-  Nenhum write no Supabase sem aprovação explícita.
-- Fase 5: em curso — domínio de propostas (T020 a T024 concluídos: preços,
-  máquina de estados e schemas Zod com testes; 42 testes verdes). T025 (migração)
-  aguarda aprovação explícita.
-- Próxima fase: Fase 6 — dashboard e RBAC (US4), área autenticada e listas.
+  Migrações 001/002 e seed `newtour-test` aplicados no remoto (2026-08-19).
+- Fase 5: concluída (T020 a T025) — domínio de propostas (preços, máquina de
+  estados, schemas Zod, migração 002) integrado em `main` com 42 testes verdes.
+- Fase 6: em curso — dashboard e RBAC (US4): T026 a T029 concluídos (tipos DB,
+  layout, queries e kanban); T030 (E2E Playwright) em validação na CI.
+- Próxima fase: Fase 7 — criador e publicação (US1).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
