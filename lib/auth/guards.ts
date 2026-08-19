@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation';
+import { connection } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import type { UserRole } from '@/lib/supabase/types';
 
 export async function requireUser() {
+  await connection();
   const client = await createClient();
   const { data: { user } } = await client.auth.getUser();
   if (!user) redirect('/login');
