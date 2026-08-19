@@ -109,8 +109,8 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 - Fase 1: concluída e integrada em `main`.
 - Fase 2: concluída e integrada em `main`.
 - Fase 3: concluída e integrada em `main` (estrutura Supabase, `.env.example`, `lib/env.ts`).
-- Fase 4: em curso — T014 (teste de isolamento) e T015 (migração de identidade) prontos em PR;
-  aguarda T016 (seed, aprovação explícita) e PR 4b (clientes Supabase, login e RBAC).
+- Fase 4: em curso — T014, T015 e T016 (seed) prontos em PR;
+  aguarda PR 4b (clientes Supabase, login e RBAC).
   Nenhum write no Supabase sem aprovação explícita.
 
 <!-- BEGIN:nextjs-agent-rules -->
