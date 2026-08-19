@@ -96,16 +96,22 @@ o mínimo e confirmar sucesso.
 - [x] T032 [US1] Implementar repositório e ações de rascunho em `lib/proposals/draft-service.ts` e `app/(dashboard)/proposals/actions.ts`
 - [x] T033 [US1] Criar editor modular em `app/(dashboard)/proposals/new/page.tsx` e `components/proposal/editor/`
 - [x] T034 [US1] Implementar publicação e hash de token em `lib/proposals/publish-service.ts`
-- [ ] T035 [US1] Escrever E2E criar/publicar em `tests/e2e/proposal-create-publish.spec.ts`
+- [x] T035 [US1] Escrever E2E criar/publicar em `tests/e2e/proposal-create-publish.spec.ts`
 
-> Fase 7 entregue em cinco PRs em cadeia: 7a (token + validação, #17), 7b
-> (draft-service + ações, #19), 7c (componentes do editor, #18), 7d (formulário e
-> páginas, #20) e 7e (E2E criar/publicar + docs). T035 fecha quando o E2E correr
-> verde na CI. Notas: (1) a publicação escreve secções/itens primeiro e só depois
-> passa a proposta a `sent` (falha parcial mantém o rascunho); (2) `requireRole`
-> devolve `organizationId` para criar propostas com o tenant correto; (3) o link
-> público `/p/[token]` ainda aponta para uma rota que entra na Fase 8; (4) a
-> migração para shadcn/ui está registada como Fase 13 (backlog).
+> Fase 7 entregue e integrada em `main` em cinco PRs em cadeia: #17 (token +
+> validação), #19 (draft-service + ações), #18 (componentes do editor), #20
+> (formulário e páginas) e #21 (E2E + docs). Notas: (1) a publicação escreve
+> secções/itens primeiro e só depois passa a proposta a `sent` (falha parcial
+> mantém o rascunho); (2) `requireRole` devolve `organizationId`; (3) o link
+> público `/p/[token]` aponta para uma rota que entra na Fase 8; (4) a migração
+> para shadcn/ui está registada como Fase 13 (backlog).
+>
+> **PRÉ-REQUISITO DA FASE 8 (anotado a pedido do utilizador, 2026-08-19):**
+> os PRs #17, #19 e #20 ficaram com a CI pendurada no passo "Install Playwright
+> browser" (flake recorrente do runner/CDN; #18 e #21 passaram, e os restantes
+> passaram após cancel+rerun). Os merges foram feitos ignorando a CI por decisão
+> do utilizador. Antes de abrir PRs da Fase 8, investigar e ajustar a CI
+> (cache do Playwright, runner mais estável, retry automático no workflow).
 
 ## Phase 8: Página pública e simulação (US2)
 
