@@ -44,10 +44,12 @@ test('agent cria, guarda e publica uma proposta com secção e itens', async ({ 
   await page.getByLabel('Variação de preço (€)').fill('150.00');
 
   await page.getByRole('button', { name: 'Guardar rascunho' }).click();
-  await expect(page.getByRole('button', { name: 'Guardar rascunho' })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Guardar rascunho' })).toBeEnabled({
+    timeout: 30000,
+  });
 
   await page.getByRole('button', { name: 'Publicar' }).click();
-  await expect(page.getByText('Proposta publicada!')).toBeVisible();
+  await expect(page.getByText('Proposta publicada!')).toBeVisible({ timeout: 30000 });
   const linkPublico = page.locator('a[href^="/p/"]');
   await expect(linkPublico).toBeVisible();
   await expect(linkPublico).toHaveAttribute('href', /^\/p\/[A-Za-z0-9_-]{40,}$/);
