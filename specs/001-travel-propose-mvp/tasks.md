@@ -48,6 +48,10 @@ o mínimo e confirmar sucesso.
 > Nota de convenção: o Supabase CLI exige nomes `<timestamp>_<nome>.sql` (ex:
 > `20260819000001_identity.sql`) — aplicar a mesma convenção em T025, T037,
 > T043, T044 e T049.
+>
+> Pendência (Fase 4): o GitHub Actions não dispara a CI em pushes a PRs abertos
+> (ver LEARNINGS.md "CI não dispara para pushes a um PR"); o PR 4b foi mergido com
+> validação local + CI a correr no push a `main`. Resolver o disparo antes da Fase 5.
 
 ## Phase 5: Domínio de propostas
 
