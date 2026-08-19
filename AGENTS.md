@@ -107,8 +107,11 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 ## Estado da implementação
 
 - Fase 1: concluída e integrada em `main`.
-- Fase 2: implementada, validada e aprovada em code review; aguarda PR e integração em `main`.
-- Próxima fase após o merge: Fase 3 — Supabase e ambiente, começando pela confirmação read-only do projeto `travel-propose-mvp`. Nenhum write no Supabase sem aprovação explícita.
+- Fase 2: concluída e integrada em `main`.
+- Fase 3: concluída e integrada em `main` (estrutura Supabase, `.env.example`, `lib/env.ts`).
+- Fase 4: em curso — T014 (teste de isolamento) e T015 (migração de identidade) prontos em PR;
+  aguarda T016 (seed, aprovação explícita) e PR 4b (clientes Supabase, login e RBAC).
+  Nenhum write no Supabase sem aprovação explícita.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
