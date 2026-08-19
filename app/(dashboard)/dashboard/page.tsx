@@ -9,13 +9,23 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold text-foreground">
-          {role === 'MEMBER' ? 'As minhas propostas' : 'Propostas da agência'}
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {role === 'MEMBER' ? 'Acompanhe as propostas que criou.' : 'Visão geral do pipeline da organização.'}
-        </p>
+      <header className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold text-foreground">
+            {role === 'MEMBER' ? 'As minhas propostas' : 'Propostas da agência'}
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {role === 'MEMBER' ? 'Acompanhe as propostas que criou.' : 'Visão geral do pipeline da organização.'}
+          </p>
+        </div>
+        {role === 'MEMBER' ? (
+          <a
+            href="/proposals/new"
+            className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background"
+          >
+            Nova proposta
+          </a>
+        ) : null}
       </header>
 
       <MetricsCards metrics={data.metrics} />
