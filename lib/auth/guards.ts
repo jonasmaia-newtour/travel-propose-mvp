@@ -13,8 +13,12 @@ export async function requireUser() {
 
 export async function requireRole(...roles: UserRole[]) {
   const { client, user } = await requireUser();
-  const { data: profile } = await client.from('profiles').select('role').eq('id', user.id).single();
+  const { data: profile } = await client
+    .from('profiles')
+    .select('role, organization_id')
+    .eq('id', user.id)
+    .single();
   if (!profile) redirect('/login');
   if (!roles.includes(profile.role)) redirect('/');
-  return { client, user, role: profile.role };
+  return { client, user, role: profile.role, organizationId: profile.organization_id };
 }
