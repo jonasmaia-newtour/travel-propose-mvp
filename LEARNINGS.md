@@ -36,6 +36,7 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 - **Push direto em `main` é proibido** — causa: trabalho feito sem criar worktree e branch de feature; solução: antes de qualquer fase, criar `git worktree add .worktrees/<branch> -b <branch>`, trabalhar nesse worktree, abrir PR, aguardar CI verde e fazer squash merge. O `.worktrees/` já existe e está no `.gitignore`.
 - **Repetir o commit após um revert não resolve a violação** — causa: após o revert de um commit direto em `main`, o agente voltou a commitar o mesmo conteúdo em `main`; solução: nunca commitar em `main`; mover o trabalho para uma worktree/branch e prosseguir por PR.
 - **CI silenciosa em push a `main`** — causa: o workflow usa `branches-ignore: [main]`, logo pushes diretos nunca são verificados; solução: manter o workflow ativo também em `push` a `main` para detetar quebras mesmo sem GitHub Pro (rulesets continuam a devolver 403).
+- **CI não dispara para pushes a um PR (pull_request)** — causa: o GitHub Actions deixou de processar eventos `synchronize`/`reopened` do ramo do PR (push recebido — o Vercel redeploya — mas nenhum run é criado; status do GitHub "operacional"); solução: validar localmente (lint/typecheck/testes/build), resolver conflitos, squash+merge manual e deixar a CI correr no push a `main`; re-disparar em sessão futura (novo push, fechar/reabrir PR) ou contactar o suporte do GitHub.
 
 ## Supabase e infraestrutura
 

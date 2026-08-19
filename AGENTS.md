@@ -109,9 +109,10 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
 - Fase 1: concluída e integrada em `main`.
 - Fase 2: concluída e integrada em `main`.
 - Fase 3: concluída e integrada em `main` (estrutura Supabase, `.env.example`, `lib/env.ts`).
-- Fase 4: em curso — T014, T015 e T016 (seed) prontos em PR;
-  aguarda PR 4b (clientes Supabase, login e RBAC).
+- Fase 4: concluída (T014 a T019) — fundação multi-tenant, seed e autenticação
+  (clientes Supabase, proxy, login e guardas RBAC) prontos em PR.
   Nenhum write no Supabase sem aprovação explícita.
+- Próxima fase: Fase 5 — área autenticada da agência e listas de propostas.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
@@ -122,3 +123,4 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+<!-- trigger-ci -->
