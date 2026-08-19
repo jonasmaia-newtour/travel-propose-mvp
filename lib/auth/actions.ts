@@ -23,5 +23,11 @@ export async function login(_state: LoginState, formData: FormData): Promise<Log
     password: parsed.data.password,
   });
   if (error) return { error: 'E-mail ou palavra-passe incorretos.' };
-  redirect('/');
+  redirect('/dashboard');
+}
+
+export async function logout() {
+  const client = await createClient();
+  await client.auth.signOut();
+  redirect('/login');
 }
