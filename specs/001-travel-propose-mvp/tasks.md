@@ -49,18 +49,24 @@ o mínimo e confirmar sucesso.
 > `20260819000001_identity.sql`) — aplicar a mesma convenção em T025, T037,
 > T043, T044 e T049.
 >
-> Pendência (Fase 4): o GitHub Actions não dispara a CI em pushes a PRs abertos
-> (ver LEARNINGS.md "CI não dispara para pushes a um PR"); o PR 4b foi mergido com
-> validação local + CI a correr no push a `main`. Resolver o disparo antes da Fase 5.
+> Pendência (Fase 4): o GitHub Actions não dispara a CI enquanto um PR tem conflitos
+> de merge (ver LEARNINGS.md "CI silenciosa em PR com conflitos"); o PR 4b foi
+> mergido após resolução de conflitos, com a CI a correr no push a `main`.
+> Confirmado em 2026-08-19: os runs de `pull_request` reaparecem assim que o PR
+> fica mergável.
 
 ## Phase 5: Domínio de propostas
 
-- [ ] T020 [P] Escrever testes de preço em `tests/unit/proposal/pricing.spec.ts`
-- [ ] T021 [P] Escrever testes de estados em `tests/unit/proposal/state-machine.spec.ts`
-- [ ] T022 Implementar cálculo e seleção em `domain/proposal/pricing.ts`
-- [ ] T023 Implementar transições em `domain/proposal/state-machine.ts`
-- [ ] T024 Criar schemas Zod em `schemas/proposal.ts`
+- [x] T020 [P] Escrever testes de preço em `tests/unit/proposal/pricing.spec.ts`
+- [x] T021 [P] Escrever testes de estados em `tests/unit/proposal/state-machine.spec.ts`
+- [x] T022 Implementar cálculo e seleção em `domain/proposal/pricing.ts`
+- [x] T023 Implementar transições em `domain/proposal/state-machine.ts`
+- [x] T024 Criar schemas Zod em `schemas/proposal.ts`
 - [ ] T025 Criar migração de propostas, secções, itens e RLS em `supabase/migrations/002_proposals.sql` após aprovação explícita do utilizador
+
+> Fase 5 entregue em dois PRs: 5a (T020-T024, domínio + schemas + testes) e 5a-2 (T025,
+> migração, após aprovação explícita). Validação de T020-T024: 42 testes verdes
+> (preços, estados, schemas), lint e typecheck limpos.
 
 ## Phase 6: Dashboard e RBAC (US4)
 
