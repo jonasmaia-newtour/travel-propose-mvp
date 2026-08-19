@@ -118,7 +118,10 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
   queries, kanban e E2E de permissões com login real dos três papéis, integrados
   em `main` (PRs #13, #14, #15). A CI usa os secrets `NEXT_PUBLIC_SUPABASE_URL`
   e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-- Próxima fase: Fase 7 — criador e publicação (US1), T031 a T035.
+- Fase 7: em curso — criador e publicação (US1): T031 a T034 concluídos (token
+  hasheado, draft-service, ações e editor modular); T035 (E2E criar/publicar) em
+  validação na CI. PRs #17 a #20 em cadeia (7a→7b→7c→7d), 7e em aberto.
+- Próxima fase: Fase 8 — página pública e simulação (US2), T036 a T040.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

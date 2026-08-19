@@ -92,11 +92,20 @@ o mínimo e confirmar sucesso.
 
 **Independent test**: Agent cria rascunho, adiciona opções e recebe link seguro.
 
-- [ ] T031 [P] [US1] Escrever testes de schema e publicação em `tests/unit/proposal/publish.spec.ts`
-- [ ] T032 [US1] Implementar repositório e ações de rascunho em `lib/proposals/draft-service.ts` e `app/(dashboard)/proposals/actions.ts`
-- [ ] T033 [US1] Criar editor modular em `app/(dashboard)/proposals/new/page.tsx` e `components/proposal/editor/`
-- [ ] T034 [US1] Implementar publicação e hash de token em `lib/proposals/publish-service.ts`
+- [x] T031 [P] [US1] Escrever testes de schema e publicação em `tests/unit/proposal/publish.spec.ts`
+- [x] T032 [US1] Implementar repositório e ações de rascunho em `lib/proposals/draft-service.ts` e `app/(dashboard)/proposals/actions.ts`
+- [x] T033 [US1] Criar editor modular em `app/(dashboard)/proposals/new/page.tsx` e `components/proposal/editor/`
+- [x] T034 [US1] Implementar publicação e hash de token em `lib/proposals/publish-service.ts`
 - [ ] T035 [US1] Escrever E2E criar/publicar em `tests/e2e/proposal-create-publish.spec.ts`
+
+> Fase 7 entregue em cinco PRs em cadeia: 7a (token + validação, #17), 7b
+> (draft-service + ações, #19), 7c (componentes do editor, #18), 7d (formulário e
+> páginas, #20) e 7e (E2E criar/publicar + docs). T035 fecha quando o E2E correr
+> verde na CI. Notas: (1) a publicação escreve secções/itens primeiro e só depois
+> passa a proposta a `sent` (falha parcial mantém o rascunho); (2) `requireRole`
+> devolve `organizationId` para criar propostas com o tenant correto; (3) o link
+> público `/p/[token]` ainda aponta para uma rota que entra na Fase 8; (4) a
+> migração para shadcn/ui está registada como Fase 13 (backlog).
 
 ## Phase 8: Página pública e simulação (US2)
 
@@ -143,9 +152,26 @@ o mínimo e confirmar sucesso.
 - [ ] T058 Validar os cenários de `specs/001-travel-propose-mvp/quickstart.md`
 - [ ] T059 Executar `git diff --staged`, atualizar documentação e abrir PR de cada fase
 
+## Phase 13: Migração para shadcn/ui (backlog)
+
+> Decisão registada a pedido do utilizador (2026-08-19): migrar todos os componentes
+> para os primitivos shadcn/ui (`components/ui/` — Button, Input, Label, Select,
+> Fieldset, Card, etc.), aproveitando o `components.json` já inicializado
+> (estilo "base-nova", lucide). Hoje os componentes são Tailwind puro à mão
+> (`components/dashboard/`, `components/proposal/editor/`).
+
+- [ ] T060 [UI] Instalar dependências shadcn (radix, class-variance-authority, tailwind-merge, lucide-react) e gerar `components/ui/`
+- [ ] T061 [UI] Migrar `components/dashboard/` (kanban, cartões, badges, métricas)
+- [ ] T062 [UI] Migrar `components/proposal/editor/` (formulário, secções, itens, botões)
+- [ ] T063 [UI] Migrar formulários e páginas autenticadas (`app/(dashboard)/`)
+- [ ] T064 [UI] Validar visual, acessibilidade e E2E após a migração
+
 ## Dependencies & Execution Order
 
 `1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> 10 -> 11 -> 12`.
+
+Fase 13 (shadcn/ui) é backlog pós-release: pode ser feita a qualquer momento após
+a Fase 12, sem dependências de negócio.
 
 US4 depende da fundação multi-tenant; US1 depende do domínio e dashboard; US2 depende
 de US1; US3 depende de US2; US5 pode começar após a Fase 2, mas é entregue na Fase 11.
