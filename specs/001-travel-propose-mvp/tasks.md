@@ -39,15 +39,19 @@ o mínimo e confirmar sucesso.
 - [x] T014 Escrever teste de isolamento em `tests/integration/tenant-isolation.spec.ts`
 - [x] T015 Criar migração de organizações, perfis, enums, índices, timestamps e RLS em `supabase/migrations/001_identity.sql`
 - [x] T016 Criar seed `newtour-test` e utilizadores de demonstração em `supabase/seed.sql` (aprovado pelo utilizador em 2026-08-19)
-- [ ] T017 Configurar clientes Supabase browser/server/proxy em `lib/supabase/`
-- [ ] T018 Implementar login e guardas RBAC em `app/(auth)/login/page.tsx` e `lib/auth/`
-- [ ] T019 Executar testes de RLS, autenticação, lint e typecheck da fase
+- [x] T017 Configurar clientes Supabase browser/server/proxy em `lib/supabase/` e `proxy.ts` (Next.js 16)
+- [x] T018 Implementar login e guardas RBAC em `app/(auth)/login/page.tsx` e `lib/auth/`
+- [x] T019 Executar testes de RLS, autenticação, lint e typecheck da fase
 
 > A Fase 4 ultrapassa o limite de 400 linhas por PR e será entregue em três PRs:
 > PR 4a (T014 + T015), PR 4a-2 (T016, seed) e PR 4b (T017 + T018 + T019).
 > Nota de convenção: o Supabase CLI exige nomes `<timestamp>_<nome>.sql` (ex:
 > `20260819000001_identity.sql`) — aplicar a mesma convenção em T025, T037,
 > T043, T044 e T049.
+>
+> Pendência (Fase 4): o GitHub Actions não dispara a CI em pushes a PRs abertos
+> (ver LEARNINGS.md "CI não dispara para pushes a um PR"); o PR 4b foi mergido com
+> validação local + CI a correr no push a `main`. Resolver o disparo antes da Fase 5.
 
 ## Phase 5: Domínio de propostas
 
