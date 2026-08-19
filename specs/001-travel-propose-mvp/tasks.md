@@ -72,11 +72,19 @@ o mínimo e confirmar sucesso.
 
 **Independent test**: cada papel só vê propostas permitidas e o pipeline da agência.
 
-- [ ] T026 [P] [US4] Escrever E2E de permissões em `tests/e2e/dashboard-rbac.spec.ts`
-- [ ] T027 [US4] Criar layout e navegação autenticados em `app/(dashboard)/layout.tsx`
-- [ ] T028 [US4] Criar queries paginadas do pipeline em `lib/proposals/dashboard-queries.ts`
-- [ ] T029 [US4] Implementar dashboard e kanban em `app/(dashboard)/dashboard/page.tsx` e `components/dashboard/`
+- [x] T026 [P] [US4] Escrever E2E de permissões em `tests/e2e/dashboard-rbac.spec.ts`
+- [x] T027 [US4] Criar layout e navegação autenticados em `app/(dashboard)/layout.tsx`
+- [x] T028 [US4] Criar queries paginadas do pipeline em `lib/proposals/dashboard-queries.ts`
+- [x] T029 [US4] Implementar dashboard e kanban em `app/(dashboard)/dashboard/page.tsx` e `components/dashboard/`
 - [ ] T030 [US4] Validar Owner, Manager e Agent com Playwright
+
+> Fase 6 entregue em três PRs: 6a (tipos DB gerados + redirect login, PR #13),
+> 6b (layout, queries e kanban, PR #14) e 6c (E2E RBAC + env vars na CI).
+> T030 fica concluído quando o E2E correr verde na CI (requer os secrets
+> `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` no repositório).
+> Nota: o Agent (MEMBER) é limitado às próprias propostas no nível da aplicação;
+> a policy RLS `proposals_read_own_org` continua a permitir leitura de tenant
+> para todos os papéis (apertar RLS por papel fica registado para revisão).
 
 ## Phase 7: Criador e publicação (US1)
 
