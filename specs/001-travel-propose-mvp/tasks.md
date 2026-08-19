@@ -38,10 +38,10 @@ o mínimo e confirmar sucesso.
 
 - [x] T014 Escrever teste de isolamento em `tests/integration/tenant-isolation.spec.ts`
 - [x] T015 Criar migração de organizações, perfis, enums, índices, timestamps e RLS em `supabase/migrations/001_identity.sql`
-- [ ] T016 Criar seed `newtour-test` e utilizadores de demonstração em `supabase/seed.sql` após aprovação explícita do utilizador
-- [ ] T017 Configurar clientes Supabase browser/server/proxy em `lib/supabase/`
-- [ ] T018 Implementar login e guardas RBAC em `app/(auth)/login/page.tsx` e `lib/auth/`
-- [ ] T019 Executar testes de RLS, autenticação, lint e typecheck da fase
+- [x] T016 Criar seed `newtour-test` e utilizadores de demonstração em `supabase/seed.sql` (aprovado pelo utilizador em 2026-08-19)
+- [x] T017 Configurar clientes Supabase browser/server/proxy em `lib/supabase/` e `proxy.ts` (Next.js 16)
+- [x] T018 Implementar login e guardas RBAC em `app/(auth)/login/page.tsx` e `lib/auth/`
+- [x] T019 Executar testes de RLS, autenticação, lint e typecheck da fase
 
 > A Fase 4 ultrapassa o limite de 400 linhas por PR e será entregue em três PRs:
 > PR 4a (T014 + T015), PR 4a-2 (T016, seed) e PR 4b (T017 + T018 + T019).
