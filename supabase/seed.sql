@@ -54,12 +54,11 @@ begin
 
     insert into auth.identities (
       id, user_id, provider_id, identity_data, provider,
-      last_sign_in_at, created_at, updated_at, email
+      last_sign_in_at, created_at, updated_at
     ) values (
       gen_random_uuid(), v_user.user_id, v_user.user_id::text,
       jsonb_build_object('sub', v_user.user_id, 'email', v_user.email),
-      'email', timezone('utc', now()), timezone('utc', now()), timezone('utc', now()),
-      v_user.email
+      'email', timezone('utc', now()), timezone('utc', now()), timezone('utc', now())
     )
     on conflict (provider, provider_id) do nothing;
 
