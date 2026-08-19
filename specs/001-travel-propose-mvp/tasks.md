@@ -29,6 +29,11 @@ o mínimo e confirmar sucesso.
 - [x] T012 Documentar variáveis em `.env.example` e validação de arranque em `lib/env.ts`
 - [x] T013 Criar teste de configuração em `tests/unit/env.spec.ts`
 
+> Nota de encerramento da Fase 3: a estrutura (`config.toml`, `supabase/migrations/.gitkeep` e `seed.sql`
+> placeholder) está commitada e validada. As migrações de conteúdo criadas fora de PR durante esta fase
+> pertencem à Fase 4/T015; foram preservadas como material de referência e serão reescritas com as
+> correções RLS (função de trigger, cores `text`, `auth.uid()`) antes de qualquer write no Supabase.
+
 ## Phase 4: Fundação multi-tenant e autenticação
 
 - [ ] T014 Escrever teste de isolamento em `tests/integration/tenant-isolation.spec.ts`
@@ -37,6 +42,9 @@ o mínimo e confirmar sucesso.
 - [ ] T017 Configurar clientes Supabase browser/server/proxy em `lib/supabase/`
 - [ ] T018 Implementar login e guardas RBAC em `app/(auth)/login/page.tsx` e `lib/auth/`
 - [ ] T019 Executar testes de RLS, autenticação, lint e typecheck da fase
+
+> A Fase 4 ultrapassa o limite de 400 linhas por PR e será entregue em dois PRs:
+> PR 4a (T014 + T015 + T016) e PR 4b (T017 + T018 + T019).
 
 ## Phase 5: Domínio de propostas
 

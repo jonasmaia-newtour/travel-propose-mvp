@@ -34,8 +34,15 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 ## Git e protocolo de entrega
 
 - **Push direto em `main` é proibido** — causa: trabalho feito sem criar worktree e branch de feature; solução: antes de qualquer fase, criar `git worktree add .worktrees/<branch> -b <branch>`, trabalhar nesse worktree, abrir PR, aguardar CI verde e fazer squash merge. O `.worktrees/` já existe e está no `.gitignore`.
+- **Repetir o commit após um revert não resolve a violação** — causa: após o revert de um commit direto em `main`, o agente voltou a commitar o mesmo conteúdo em `main`; solução: nunca commitar em `main`; mover o trabalho para uma worktree/branch e prosseguir por PR.
+- **CI silenciosa em push a `main`** — causa: o workflow usa `branches-ignore: [main]`, logo pushes diretos nunca são verificados; solução: manter o workflow ativo também em `push` a `main` para detetar quebras mesmo sem GitHub Pro (rulesets continuam a devolver 403).
 
 ## Supabase e infraestrutura
 
 - **Sequência obrigatória: `supabase init` antes de `supabase link`** — causa: `supabase link` pressupõe `config.toml` local; sem ele o comando falha; solução: executar `supabase init` primeiro para gerar a estrutura local, depois `supabase link --project-ref <ref>`.
 - **`supabase link` não exige password da base de dados** — causa: o link apenas associa o `project_ref` ao diretório local; a password só é necessária para operações de migração direta; solução: `supabase link --project-ref <ref>` é suficiente para configurar o ambiente local.
+- **Ficheiros SQL gravados como UTF-16LE no Windows** — causa: `Set-Content` do PowerShell 5.1 usa UTF-16LE por omissão; o git trata o ficheiro como binário e o Postgres recusa executá-lo; solução: escrever sempre UTF-8 sem BOM com LF (ex: `[System.IO.File]::WriteAllText(path, text, (New-Object System.Text.UTF8Encoding($false)))`) e validar a codificação antes de commitar.
+- **`Get-Content` mostra mojibake em UTF-8 sem BOM** — causa: o PowerShell 5.1 lê com a codepage ANSI quando não há BOM; solução: ler com `-Encoding UTF8` ou `git show` para confirmar o conteúdo real antes de alterar um ficheiro.
+- **`oklch` não é tipo PostgreSQL** — causa: valores de cor CSS usados como tipo de coluna; solução: guardar cores como `text` e aplicar tokenização no frontend, nunca tipos de cor no schema.
+- **Trigger referencia função inexistente** — causa: `CREATE TRIGGER ... execute function update_updated_at_column()` sem a função ser criada na mesma migração, antes dos triggers; o `CREATE TRIGGER` falha; solução: criar `update_updated_at_column()` como primeira migração.
+- **`current_setting('app.user_id')` em políticas RLS falha em runtime** — causa: o parâmetro nunca é definido na sessão da aplicação; solução: usar `auth.uid()` do Supabase para identificar o utilizador autenticado nas policies.
