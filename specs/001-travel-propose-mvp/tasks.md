@@ -38,7 +38,7 @@ o mínimo e confirmar sucesso.
 
 - [x] T014 Escrever teste de isolamento em `tests/integration/tenant-isolation.spec.ts`
 - [x] T015 Criar migração de organizações, perfis, enums, índices, timestamps e RLS em `supabase/migrations/001_identity.sql`
-- [ ] T016 Criar seed `newtour-test` e utilizadores de demonstração em `supabase/seed.sql` após aprovação explícita do utilizador
+- [x] T016 Criar seed `newtour-test` e utilizadores de demonstração em `supabase/seed.sql` (aprovado pelo utilizador em 2026-08-19)
 - [ ] T017 Configurar clientes Supabase browser/server/proxy em `lib/supabase/`
 - [ ] T018 Implementar login e guardas RBAC em `app/(auth)/login/page.tsx` e `lib/auth/`
 - [ ] T019 Executar testes de RLS, autenticação, lint e typecheck da fase
