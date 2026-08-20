@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { fetchPublicProposal } from '@/lib/proposals/public-proposal';
-import { PublicProposalView } from '@/components/proposal/public-proposal-view';
+import { PublicSimulator } from '@/components/proposal/public-simulator';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,5 +16,5 @@ export default async function PublicProposalPage({
     notFound();
   }
 
-  return <PublicProposalView proposal={proposal} />;
+  return <PublicSimulator proposal={proposal} />;
 }
