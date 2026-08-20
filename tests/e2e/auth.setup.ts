@@ -33,7 +33,7 @@ async function iniciarSessao(page: Page, email: string, senha: string): Promise<
   throw new Error(`Sessão não iniciada após 3 tentativas (${email}).`);
 }
 
-test.describe.configure({ mode: 'serial' });
+setup.describe.configure({ mode: 'serial' });
 
 for (const conta of contas) {
   setup(`iniciar sessão para ${conta.papel}`, async ({ page }) => {
