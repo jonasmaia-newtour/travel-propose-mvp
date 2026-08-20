@@ -98,6 +98,10 @@ o mínimo e confirmar sucesso.
 - [x] T034 [US1] Implementar publicação e hash de token em `lib/proposals/publish-service.ts`
 - [x] T035 [US1] Escrever E2E criar/publicar em `tests/e2e/proposal-create-publish.spec.ts`
 
+> T035 validado: E2E verde na CI (PR #23, 2026-08-19). O primeiro run falhou por
+> timeout do expect (5s) após server actions lentas; corrigido com timeout
+> explícito de 30s nos asserts pós-submissão.
+
 > Fase 7 entregue e integrada em `main` em cinco PRs em cadeia: #17 (token +
 > validação), #19 (draft-service + ações), #18 (componentes do editor), #20
 > (formulário e páginas) e #21 (E2E + docs). Notas: (1) a publicação escreve
