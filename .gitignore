@@ -15,12 +15,12 @@ test-results/
 tmp/
 .superpowers/
 .agents/
-.specify/*
-!.specify/memory/
-.specify/memory/*
-!.specify/memory/constitution.md
+.specify/
 .worktrees/
 worktrees/
+
+# Documentação interna do produto (apenas local — não enviar para o GitHub)
+specs/
 
 # Documentos-fonte já consolidados em AGENTS.md
 *.pdf
