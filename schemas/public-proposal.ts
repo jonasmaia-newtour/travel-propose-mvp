@@ -27,6 +27,7 @@ const publicProposalSectionSchema = z
 export const publicProposalSchema = z
   .object({
     title: z.string(),
+    baseAmount: z.number().int().nonnegative(),
     agency: z
       .object({
         name: z.string(),
@@ -41,3 +42,42 @@ export const publicProposalSchema = z
   .strict();
 
 export type PublicProposal = z.infer<typeof publicProposalSchema>;
+
+const publicProposalRawItemSchema = z
+  .object({
+    title: z.string(),
+    description: z.string().nullable(),
+    image_url: z.string().url().nullable(),
+    price_delta: z.number().int(),
+    position: z.number().int().nonnegative(),
+  })
+  .strict();
+
+const publicProposalRawSectionSchema = z
+  .object({
+    title: z.string(),
+    mode: z.enum(['single', 'multiple']),
+    position: z.number().int().nonnegative(),
+    items: z.array(publicProposalRawItemSchema),
+  })
+  .strict();
+
+export const publicProposalRawSchema = z
+  .object({
+    title: z.string(),
+    base_amount: z.number().int().nonnegative(),
+    notes: z.string().nullable(),
+    expires_at: z
+      .string()
+      .refine((value) => !Number.isNaN(Date.parse(value)), 'Data de validade inválida.'),
+    agency: z
+      .object({
+        name: z.string(),
+        logo_url: z.string().url().nullable(),
+      })
+      .strict(),
+    sections: z.array(publicProposalRawSectionSchema),
+  })
+  .strict();
+
+export type PublicProposalRaw = z.infer<typeof publicProposalRawSchema>;
