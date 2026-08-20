@@ -19,7 +19,7 @@ export function toPublicProposal(raw: PublicProposalRaw): PublicProposal {
     },
     currency: PUBLIC_CURRENCY,
     terms: raw.notes,
-    expiresAt: raw.expires_at,
+    expiresAt: new Date(raw.expires_at).toISOString(),
     sections: [...raw.sections]
       .sort((a, b) => a.position - b.position)
       .map((section) => ({

@@ -156,6 +156,16 @@ describe('toPublicProposal', () => {
     expect(result.currency).toBe(PUBLIC_CURRENCY);
   });
 
+  it('normaliza a validade com offset para formato UTC Z', () => {
+    const raw = buildRawFixture();
+    raw.expires_at = '2026-08-21T17:04:00+00:00';
+    const result = toPublicProposal(raw);
+
+    expect(result.expiresAt).toBe('2026-08-21T17:04:00.000Z');
+    const parsed = publicProposalSchema.safeParse(result);
+    expect(parsed.success).toBe(true);
+  });
+
   it('produz um objeto válido segundo o schema do contrato', () => {
     const result = toPublicProposal(buildRawFixture());
 

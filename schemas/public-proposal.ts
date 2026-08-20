@@ -67,7 +67,9 @@ export const publicProposalRawSchema = z
     title: z.string(),
     base_amount: z.number().int().nonnegative(),
     notes: z.string().nullable(),
-    expires_at: z.iso.datetime(),
+    expires_at: z
+      .string()
+      .refine((value) => !Number.isNaN(Date.parse(value)), 'Data de validade inválida.'),
     agency: z
       .object({
         name: z.string(),
