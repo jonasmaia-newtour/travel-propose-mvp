@@ -24,15 +24,16 @@ async function iniciarSessao(page: Page, email: string, senha: string): Promise<
     await page.getByRole('button', { name: 'Entrar' }).click();
     await page.waitForURL(/\/dashboard$|\/login$/, { timeout: 30_000 });
     if (new URL(page.url()).pathname === '/dashboard') return;
-    const erro = page.getByRole('alert');
-    if (await erro.isVisible()) {
-      throw new Error(`Credenciais demo inválidas (${email}) — verificar o seed.`);
-    }
-    // 429 transitório do Supabase Auth (limite por IP partilhado) devolve ao
-    // /login sem mensagem; nova tentativa com o formulário já preenchido.
+    // O login devolve a mesma mensagem para qualquer erro do signInWithPassword,
+    // incluindo 429 do Supabase Auth (limite por IP partilhado); logo, não é
+    // possível distinguir falha de credenciais de um 429 transitório. Tentar de
+    // novo com backoff; credenciais inválidas falham consistentemente nas 3.
+    await page.waitForTimeout(2_000);
   }
   throw new Error(`Sessão não iniciada após 3 tentativas (${email}).`);
 }
+
+test.describe.configure({ mode: 'serial' });
 
 for (const conta of contas) {
   setup(`iniciar sessão para ${conta.papel}`, async ({ page }) => {
