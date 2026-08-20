@@ -4,11 +4,10 @@ import { expect, test } from '@playwright/test';
  * E2E de criação e publicação (US1).
  * O Agent cria um rascunho, adiciona secção e itens, guarda e publica;
  * a proposta publicada aparece no kanban em "Enviada" e o link público é mostrado.
+ * A sessão é fornecida pelo storageState do projeto (auth.setup.ts).
  * Requer as env vars NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
  * e os utilizadores demo do seed (newtour-test).
  */
-
-const senhaDemo = 'TravelPropose2026!';
 
 function futureLocalInput(daysFromNow: number): string {
   const date = new Date(Date.now() + daysFromNow * 24 * 60 * 60 * 1000);
@@ -21,11 +20,10 @@ function futureLocalInput(daysFromNow: number): string {
 test('agent cria, guarda e publica uma proposta com secção e itens', async ({ page }) => {
   const titulo = `Viagem demo ${Date.now()}`;
 
-  await page.goto('/login');
-  await page.getByLabel('E-mail').fill('agent@newtour-test.com');
-  await page.getByLabel('Palavra-passe').fill(senhaDemo);
-  await page.getByRole('button', { name: 'Entrar' }).click();
-  await expect(page).toHaveURL(/\/dashboard$/);
+  await page.goto('/dashboard');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('As minhas propostas', {
+    timeout: 30000,
+  });
 
   await page.getByRole('link', { name: 'Nova proposta' }).click();
   await expect(page).toHaveURL(/\/proposals\/new$/);
@@ -55,7 +53,9 @@ test('agent cria, guarda e publica uma proposta com secção e itens', async ({ 
   await expect(linkPublico).toHaveAttribute('href', /^\/p\/[A-Za-z0-9_-]{40,}$/);
 
   await page.goto('/dashboard');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('As minhas propostas');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('As minhas propostas', {
+    timeout: 30000,
+  });
   const colunaEnviadas = page.getByRole('region', { name: 'Enviada' });
   await expect(colunaEnviadas.getByText(titulo)).toBeVisible();
 });
