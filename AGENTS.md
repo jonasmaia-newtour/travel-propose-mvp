@@ -127,7 +127,14 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
   contrato público, leitura via token hash (003), página mobile-first,
   simulador com recálculo em tempo real e E2E Playwright desktop/mobile
   integrados em `main` (PRs #28 a #32).
-- Próxima fase: Fase 9 — aceite transacional e snapshot (US3), T041 a T045.
+- Fase 9: concluída (T041 a T046) — ajuste, expiração e aceite (US2/US3):
+  migrações 004/005/006/007, endpoints `POST /adjustments` e `POST /approval`
+  com recibo, `terms_version` no contrato, diálogos públicos (ajuste,
+  validade/expiração e recibo) com `<dialog>` nativo, integrados em `main`
+  (PRs #33 a #44). A demo em produção expirou a 2026-08-21 17:04 UTC —
+  o link da landing devolve 404; a proposta demo definitiva é a T054.
+- Próxima fase: T047 — E2E completo de ajuste e aceite
+  (`tests/e2e/proposal-adjustment-approval.spec.ts`).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
