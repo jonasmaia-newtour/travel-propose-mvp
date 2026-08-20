@@ -50,7 +50,7 @@ export async function publishProposal(
 
   const { data: proposal, error: fetchError } = await client
     .from('proposals')
-    .select('id, owner_id, status')
+    .select('id, owner_id, status, terms_version')
     .eq('id', proposalId)
     .single();
   if (fetchError || !proposal) throw new Error('Proposta não encontrada.');
@@ -70,6 +70,7 @@ export async function publishProposal(
       notes: draft.notes ?? null,
       status: nextStatus,
       token_hash: tokenHash,
+      terms_version: proposal.terms_version + 1,
     })
     .eq('id', proposalId)
     .eq('owner_id', userId);
