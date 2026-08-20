@@ -7,6 +7,7 @@ import {
   type PublicSelection,
 } from '@/domain/proposal/public-pricing';
 import { formatCurrency, formatShortDate } from '@/lib/i18n/format';
+import { PublicActions } from '@/components/proposal/public-actions';
 
 function initialSelection(proposal: PublicProposal): PublicSelection {
   return proposal.sections.map((section) => (section.mode === 'single' ? [0] : []));
@@ -20,7 +21,13 @@ function formatDelta(priceDelta: number): string {
   return priceDelta > 0 ? `+${value}` : `-${value}`;
 }
 
-export function PublicSimulator({ proposal }: { proposal: PublicProposal }) {
+export function PublicSimulator({
+  proposal,
+  token,
+}: {
+  proposal: PublicProposal;
+  token: string;
+}) {
   const [selection, setSelection] = useState<PublicSelection>(() => initialSelection(proposal));
 
   function chooseSingle(sectionIndex: number, itemIndex: number) {
@@ -161,6 +168,8 @@ export function PublicSimulator({ proposal }: { proposal: PublicProposal }) {
           Total indicativo com base nas opções escolhidas; o valor final é confirmado pela agência.
         </p>
       </footer>
+
+      <PublicActions proposal={proposal} selection={selection} token={token} />
     </div>
   );
 }
