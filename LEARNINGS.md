@@ -30,6 +30,7 @@ Entradas curtas e reutilizáveis para este e futuros projetos. Registar apenas d
 - **Zod `result.error.errors` vs `result.error.issues`** — causa: Zod v3+ usa a propriedade `.issues` (não `.errors`); aceder a `.errors` lança `Cannot read properties of undefined`; solução: usar sempre `result.error.issues`.
 - **`typeof window` como guarda de servidor falha em jsdom** — causa: o ambiente jsdom do Vitest define `window`, fazendo a guarda rejeitar todas as chamadas a funções de servidor; solução: remover a guarda de runtime e confiar em convenção de nomenclatura + TypeScript.
 - **`NODE_ENV` é `readonly` em `NodeJS.ProcessEnv`** — causa: `@types/node` declara `NODE_ENV` como readonly, impedindo atribuição direta nos testes; solução: fazer cast para `Record<string, string | undefined>` — ex: `(process.env as MutableEnv)['NODE_ENV'] = 'test'`.
+- **E2E falha com `element(s) not found` em botão de server action** — causa: ao clicar em "Guardar rascunho"/"Publicar", a ação de servidor demora mais que o timeout default do expect (5s) — vários roundtrips ao Supabase — e o `useFormStatus` muda o label do botão para "A guardar…" durante o pending, fazendo `getByRole('button', { name: 'Guardar rascunho' })` não encontrar o elemento; solução: passar timeout explícito (30s) nos asserts que seguem uma submissão de server action.
 
 ## Git e protocolo de entrega
 
