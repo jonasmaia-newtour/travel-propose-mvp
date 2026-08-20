@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -53,10 +56,58 @@ jobs:
         if: steps.scaffold.outputs.has_package == 'true'
         run: npm run test -- --run
 
+      - name: Build
+        if: steps.scaffold.outputs.has_package == 'true'
+        run: npm run build
+
+      - name: Resolve Playwright version
+        id: pw-version
+        shell: bash
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.pw-version.outputs.version }}
+
       - name: Install Playwright browser
         if: steps.scaffold.outputs.has_package == 'true'
         run: npx playwright install --with-deps chromium
 
-      - name: End-to-end tests
+      - name: Accessibility checks
         if: steps.scaffold.outputs.has_package == 'true'
+        run: npx playwright test accessibility.spec.ts
+
+  e2e:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve Playwright version
+        id: pw-version
+        shell: bash
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.pw-version.outputs.version }}
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end tests
         run: npm run test:e2e
