@@ -123,7 +123,11 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
   `main` (PRs #17 a #21). Nota: CI de #17/#19/#20 ficou pendurada no passo
   "Install Playwright browser" e os merges foram feitos ignorando a CI por
   decisão do utilizador — investigar e ajustar a CI antes da Fase 8 (ver tasks.md).
-- Próxima fase: Fase 8 — página pública e simulação (US2), T036 a T040.
+- Fase 8: concluída (T036 a T040) — página pública e simulação (US2):
+  contrato público, leitura via token hash (003), página mobile-first,
+  simulador com recálculo em tempo real e E2E Playwright desktop/mobile
+  integrados em `main` (PRs #28 a #32).
+- Próxima fase: Fase 9 — aceite transacional e snapshot (US3), T041 a T045.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

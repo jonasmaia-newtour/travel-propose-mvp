@@ -154,7 +154,7 @@ export function PublicSimulator({ proposal }: { proposal: PublicProposal }) {
           </div>
           <div className="flex items-center justify-between border-t border-foreground/10 pt-2 text-base font-semibold">
             <dt>Total estimado</dt>
-            <dd>{formatCurrency(total)}</dd>
+            <dd data-testid="simulator-total">{formatCurrency(total)}</dd>
           </div>
         </dl>
         <p className="mt-2 text-xs text-muted-foreground">
