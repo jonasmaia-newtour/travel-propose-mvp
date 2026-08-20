@@ -16,5 +16,5 @@ export default async function PublicProposalPage({
     notFound();
   }
 
-  return <PublicSimulator proposal={proposal} />;
+  return <PublicSimulator proposal={proposal} token={token} />;
 }
