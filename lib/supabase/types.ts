@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -11,6 +11,31 @@ export type Database = {
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.15"
+  }
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
@@ -88,6 +113,96 @@ export type Database = {
           {
             foreignKeyName: "profiles_organization_id_fkey"
             columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proposal_adjustment_requests: {
+        Row: {
+          id: string
+          message: string
+          proposal_id: string
+          requested_at: string
+          resolved_at: string | null
+          session_hash: string
+          tenant_id: string
+        }
+        Insert: {
+          id?: string
+          message: string
+          proposal_id: string
+          requested_at?: string
+          resolved_at?: string | null
+          session_hash: string
+          tenant_id: string
+        }
+        Update: {
+          id?: string
+          message?: string
+          proposal_id?: string
+          requested_at?: string
+          resolved_at?: string | null
+          session_hash?: string
+          tenant_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposal_adjustment_requests_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: false
+            referencedRelation: "proposals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposal_adjustment_requests_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proposal_approval_snapshots: {
+        Row: {
+          created_at: string
+          id: string
+          proposal_id: string
+          session_hash: string
+          snapshot: Json
+          tenant_id: string
+          terms_version: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          proposal_id: string
+          session_hash: string
+          snapshot: Json
+          tenant_id: string
+          terms_version: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          proposal_id?: string
+          session_hash?: string
+          snapshot?: Json
+          tenant_id?: string
+          terms_version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposal_approval_snapshots_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: true
+            referencedRelation: "proposals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposal_approval_snapshots_tenant_id_fkey"
+            columns: ["tenant_id"]
             isOneToOne: false
             referencedRelation: "organizations"
             referencedColumns: ["id"]
@@ -178,6 +293,7 @@ export type Database = {
       }
       proposals: {
         Row: {
+          approved_at: string | null
           base_amount: number
           created_at: string
           expires_at: string | null
@@ -186,11 +302,13 @@ export type Database = {
           owner_id: string
           status: Database["public"]["Enums"]["proposal_status"]
           tenant_id: string
+          terms_version: number
           title: string
           token_hash: string | null
           updated_at: string
         }
         Insert: {
+          approved_at?: string | null
           base_amount?: number
           created_at?: string
           expires_at?: string | null
@@ -199,11 +317,13 @@ export type Database = {
           owner_id: string
           status?: Database["public"]["Enums"]["proposal_status"]
           tenant_id: string
+          terms_version?: number
           title?: string
           token_hash?: string | null
           updated_at?: string
         }
         Update: {
+          approved_at?: string | null
           base_amount?: number
           created_at?: string
           expires_at?: string | null
@@ -212,6 +332,7 @@ export type Database = {
           owner_id?: string
           status?: Database["public"]["Enums"]["proposal_status"]
           tenant_id?: string
+          terms_version?: number
           title?: string
           token_hash?: string | null
           updated_at?: string
@@ -233,13 +354,44 @@ export type Database = {
           },
         ]
       }
+      tmp_t: {
+        Row: {
+          id: number | null
+        }
+        Insert: {
+          id?: number | null
+        }
+        Update: {
+          id?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      approve_public_proposal: {
+        Args: {
+          p_selection: Json
+          p_session_id: string
+          p_terms_accepted: boolean
+          p_terms_version: number
+          p_token_hash: string
+        }
+        Returns: Json
+      }
       current_organization_id: { Args: never; Returns: string }
+      current_user_role: {
+        Args: never
+        Returns: Database["public"]["Enums"]["user_role"]
+      }
       get_public_proposal: { Args: { p_token_hash: string }; Returns: Json }
+      request_public_adjustment: {
+        Args: { p_message: string; p_session_id: string; p_token_hash: string }
+        Returns: Json
+      }
+      tmp_fn: { Args: never; Returns: number }
     }
     Enums: {
       proposal_section_mode: "single" | "multiple"
@@ -376,6 +528,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       proposal_section_mode: ["single", "multiple"],
