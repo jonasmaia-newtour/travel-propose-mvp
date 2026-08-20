@@ -36,6 +36,7 @@ export const publicProposalSchema = z
       .strict(),
     currency: z.literal('EUR'),
     terms: z.string().nullable(),
+    termsVersion: z.number().int().positive(),
     expiresAt: z.iso.datetime(),
     sections: z.array(publicProposalSectionSchema),
   })
@@ -66,6 +67,7 @@ export const publicProposalRawSchema = z
   .object({
     title: z.string(),
     base_amount: z.number().int().nonnegative(),
+    terms_version: z.number().int().positive(),
     notes: z.string().nullable(),
     expires_at: z
       .string()

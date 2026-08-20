@@ -15,6 +15,7 @@ function buildRawFixture(): PublicProposalRaw {
   return {
     title: 'Viagem ao Porto',
     base_amount: 120000,
+    terms_version: 3,
     notes: 'Condições de pagamento: 30 dias após o aceite.',
     expires_at: '2026-12-31T00:00:00.000Z',
     agency: { name: 'Newtour Test', logo_url: 'https://cdn.example/logo.png' },
@@ -63,6 +64,7 @@ describe('toPublicProposal', () => {
       agency: { name: 'Newtour Test', logoUrl: 'https://cdn.example/logo.png' },
       currency: 'EUR',
       terms: 'Condições de pagamento: 30 dias após o aceite.',
+      termsVersion: 3,
       expiresAt: '2026-12-31T00:00:00.000Z',
       sections: [
         {
