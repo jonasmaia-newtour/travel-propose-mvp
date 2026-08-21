@@ -5,6 +5,10 @@ import { useActionState } from 'react';
 import { publishAction, saveDraftAction } from '@/app/(dashboard)/proposals/actions';
 import { SectionEditor, type EditorSection } from '@/components/proposal/editor/section-editor';
 import { SubmitButton } from '@/components/proposal/editor/submit-button';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
+import { Plus, PaperPlaneTilt, CheckCircle, Warning } from '@phosphor-icons/react';
 
 export interface EditorInitialData {
   title: string;
@@ -24,9 +28,6 @@ export interface EditorInitialData {
     }>;
   }>;
 }
-
-const inputClass =
-  'w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-sm text-foreground';
 
 function toLocalInputValue(iso: string | null): string {
   if (!iso) return '';
@@ -90,135 +91,151 @@ export function ProposalEditor({
   const errorMessage = saveState?.error ?? publishState?.error;
 
   return (
-    <form action={saveFormAction} className="space-y-6">
+    <form action={saveFormAction} className="space-y-8 max-w-4xl mx-auto">
       <input type="hidden" name="payload" value={payload} />
 
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="proposal-title" className="mb-1 block text-sm text-foreground">
-            Título da proposta
-          </label>
-          <input
-            id="proposal-title"
-            type="text"
-            required
-            maxLength={120}
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            className={inputClass}
-          />
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
+      <Card className="p-6 border-border shadow-xs">
+        <h2 className="text-lg font-semibold text-royal-blue mb-4">Informações Gerais da Proposta</h2>
+        <div className="space-y-4">
           <div>
-            <label htmlFor="proposal-base" className="mb-1 block text-sm text-foreground">
-              Valor base (€)
+            <label htmlFor="proposal-title" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-gray">
+              Título da proposta
             </label>
-            <input
-              id="proposal-base"
-              type="number"
-              min="0"
-              step="0.01"
+            <Input
+              id="proposal-title"
+              type="text"
               required
-              value={(baseAmountCents / 100).toFixed(2)}
-              onChange={(event) =>
-                setBaseAmountCents(Math.round((Number(event.target.value) || 0) * 100))
-              }
-              className={inputClass}
+              maxLength={120}
+              placeholder="Ex: Viagem de Luxo a Roma e Florença"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
             />
           </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label htmlFor="proposal-base" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-gray">
+                Valor base (€)
+              </label>
+              <Input
+                id="proposal-base"
+                type="number"
+                min="0"
+                step="0.01"
+                required
+                value={(baseAmountCents / 100).toFixed(2)}
+                onChange={(event) =>
+                  setBaseAmountCents(Math.round((Number(event.target.value) || 0) * 100))
+                }
+              />
+            </div>
+            <div>
+              <label htmlFor="proposal-expires" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-gray">
+                Validade e expiração
+              </label>
+              <Input
+                id="proposal-expires"
+                type="datetime-local"
+                required
+                value={expiresAt}
+                onChange={(event) => setExpiresAt(event.target.value)}
+              />
+            </div>
+          </div>
           <div>
-            <label htmlFor="proposal-expires" className="mb-1 block text-sm text-foreground">
-              Validade
+            <label htmlFor="proposal-notes" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-gray">
+              Observações para o viajante
             </label>
-            <input
-              id="proposal-expires"
-              type="datetime-local"
-              required
-              value={expiresAt}
-              onChange={(event) => setExpiresAt(event.target.value)}
-              className={inputClass}
+            <textarea
+              id="proposal-notes"
+              rows={3}
+              maxLength={1000}
+              placeholder="Notas importantes sobre a viagem..."
+              value={notes}
+              onChange={(event) => setNotes(event.target.value)}
+              className="flex w-full rounded-md border border-border bg-white px-3 py-2 text-sm text-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-blue"
             />
           </div>
         </div>
-        <div>
-          <label htmlFor="proposal-notes" className="mb-1 block text-sm text-foreground">
-            Observações
-          </label>
-          <textarea
-            id="proposal-notes"
-            rows={3}
-            maxLength={1000}
-            value={notes}
-            onChange={(event) => setNotes(event.target.value)}
-            className={inputClass}
-          />
-        </div>
-      </div>
+      </Card>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-royal-blue">Secções e Opções</h2>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              setSections([
+                ...sections,
+                { key: crypto.randomUUID(), title: '', mode: 'single', items: [] },
+              ])
+            }
+            className="text-royal-blue border-royal-blue/30 hover:bg-royal-blue/5"
+          >
+            <Plus size={16} weight="regular" className="mr-1.5" />
+            Adicionar secção
+          </Button>
+        </div>
+
         {sections.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            Ainda não há secções. Adicione a primeira para começar.
-          </p>
+          <Card className="p-8 text-center text-sm text-slate-gray border border-dashed border-border">
+            Ainda não há secções. Clique em &ldquo;Adicionar secção&rdquo; para começar a estruturar a proposta.
+          </Card>
         ) : (
-          sections.map((section) => (
-            <SectionEditor
-              key={section.key}
-              section={section}
-              onChange={(next) =>
-                setSections(sections.map((current) => (current.key === next.key ? next : current)))
-              }
-              onRemove={() => setSections(sections.filter((current) => current.key !== section.key))}
-            />
-          ))
+          <div className="space-y-6">
+            {sections.map((section) => (
+              <SectionEditor
+                key={section.key}
+                section={section}
+                onChange={(next) =>
+                  setSections(sections.map((current) => (current.key === next.key ? next : current)))
+                }
+                onRemove={() => setSections(sections.filter((current) => current.key !== section.key))}
+              />
+            ))}
+          </div>
         )}
-        <button
-          type="button"
-          onClick={() =>
-            setSections([
-              ...sections,
-              { key: crypto.randomUUID(), title: '', mode: 'single', items: [] },
-            ])
-          }
-          className="rounded-md border border-foreground/20 px-3 py-2 text-sm text-foreground"
-        >
-          Adicionar secção
-        </button>
       </div>
 
       {errorMessage ? (
-        <p
-          role="alert"
-          className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-foreground"
-        >
-          {errorMessage}
-        </p>
-      ) : null}
-
-      {publishState?.token ? (
-        <div className="rounded-md border border-foreground/10 bg-muted/30 p-4">
-          <p className="text-sm font-medium text-foreground">Proposta publicada!</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Link público para o viajante (guarde-o; só é mostrado agora):
-          </p>
-          <a
-            href={`/p/${publishState.token}`}
-            className="mt-1 block break-all text-sm text-foreground underline"
-          >
-            /p/{publishState.token}
-          </a>
+        <div role="alert" className="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800 flex items-center gap-2">
+          <Warning size={20} weight="regular" className="shrink-0 text-red-600" />
+          <span>{errorMessage}</span>
         </div>
       ) : null}
 
-      <div className="flex items-center gap-3">
+      {publishState?.token ? (
+        <Card className="p-5 border-emerald-200 bg-emerald-50/50">
+          <div className="flex items-center gap-2 text-emerald-800 font-semibold mb-1">
+            <CheckCircle size={20} weight="regular" className="text-aqua-green" />
+            <span>Proposta publicada com sucesso!</span>
+          </div>
+          <p className="text-sm text-slate-gray mb-2">
+            Link público para partilhar com o viajante (guarde-o; só é mostrado agora):
+          </p>
+          <a
+            href={`/p/${publishState.token}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-royal-blue underline break-all hover:text-royal-blue/80"
+          >
+            /p/{publishState.token}
+          </a>
+        </Card>
+      ) : null}
+
+      <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
         <SubmitButton label="Guardar rascunho" pendingLabel="A guardar…" />
-        <button
+        <Button
           type="submit"
           formAction={publishFormAction}
-          className="rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background disabled:opacity-60"
+          variant="default"
+          className="bg-royal-blue hover:bg-royal-blue/90 text-white"
         >
-          Publicar
-        </button>
+          <PaperPlaneTilt size={16} weight="regular" className="mr-2" />
+          Publicar Proposta
+        </Button>
       </div>
     </form>
   );
