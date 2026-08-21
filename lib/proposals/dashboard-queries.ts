@@ -23,6 +23,8 @@ export interface DashboardMetrics {
   published: number;
   approved: number;
   pendingRevision: number;
+  views: number;
+  interactions: number;
 }
 
 export interface DashboardData {
@@ -74,12 +76,40 @@ export async function getDashboardData(context: DashboardContext): Promise<Dashb
     countsByStatus[proposal.status] += 1;
   }
 
+  let views = 0;
+  let interactions = 0;
+  try {
+    const { data: profile } = await client
+      .from('profiles')
+      .select('organization_id')
+      .eq('id', context.userId)
+      .single();
+    const tenantId = (profile as { organization_id: string | null } | null)?.organization_id;
+    if (tenantId) {
+      const { data: events } = await client
+        .from('proposal_events')
+        .select('type')
+        .eq('tenant_id', tenantId);
+      if (events) {
+        for (const event of events as Array<{ type: string }>) {
+          if (event.type === 'opened') views += 1;
+          else if (event.type === 'selection_changed') interactions += 1;
+        }
+      }
+    }
+  } catch {
+    views = 0;
+    interactions = 0;
+  }
+
   return {
     metrics: {
       total: proposals.length,
       published: countsByStatus.sent + countsByStatus.viewed,
       approved: countsByStatus.approved,
       pendingRevision: countsByStatus.revision_requested,
+      views,
+      interactions,
     },
     countsByStatus,
     proposals,

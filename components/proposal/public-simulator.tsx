@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { PublicProposal } from '@/schemas/public-proposal';
 import {
   calculatePublicTotal,
@@ -8,6 +8,14 @@ import {
 } from '@/domain/proposal/public-pricing';
 import { formatCurrency, formatShortDate } from '@/lib/i18n/format';
 import { PublicActions } from '@/components/proposal/public-actions';
+import { getPublicSessionId } from '@/lib/proposals/public-session';
+
+function getDevice(): string | undefined {
+  if (typeof navigator === 'undefined') return undefined;
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('mobi')) return 'mobile';
+  return 'desktop';
+}
 
 function initialSelection(proposal: PublicProposal): PublicSelection {
   return proposal.sections.map((section) => (section.mode === 'single' ? [0] : []));
@@ -29,6 +37,45 @@ export function PublicSimulator({
   token: string;
 }) {
   const [selection, setSelection] = useState<PublicSelection>(() => initialSelection(proposal));
+  const openedSentRef = useRef(false);
+  const firstSelectionRef = useRef(true);
+
+  useEffect(() => {
+    if (openedSentRef.current) return;
+    openedSentRef.current = true;
+    const controller = new AbortController();
+    fetch(`/api/v1/public/proposals/${token}/events`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        type: 'opened',
+        sessionId: getPublicSessionId(),
+        device: getDevice(),
+      }),
+      signal: controller.signal,
+    }).catch(() => {});
+    return () => controller.abort();
+  }, [token]);
+
+  useEffect(() => {
+    if (firstSelectionRef.current) {
+      firstSelectionRef.current = false;
+      return;
+    }
+    const timer = window.setTimeout(() => {
+      fetch(`/api/v1/public/proposals/${token}/events`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'selection_changed',
+          sessionId: getPublicSessionId(),
+          payload: { selection },
+          device: getDevice(),
+        }),
+      }).catch(() => {});
+    }, 500);
+    return () => window.clearTimeout(timer);
+  }, [selection, token]);
 
   function chooseSingle(sectionIndex: number, itemIndex: number) {
     setSelection((current) =>
