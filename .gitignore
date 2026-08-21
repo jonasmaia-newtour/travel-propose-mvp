@@ -23,6 +23,9 @@ worktrees/
 # Documentação interna do produto (apenas local — não enviar para o GitHub)
 specs/
 
+# Mockups e assets visuais locais (apenas local — não enviar para o GitHub)
+estilo-visual-travelP/
+
 # Documentos-fonte já consolidados em AGENTS.md
 *.pdf
 *.tsbuildinfo
