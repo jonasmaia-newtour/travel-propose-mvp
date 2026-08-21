@@ -139,7 +139,12 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
   `record_proposal_event` e política `proposal_events_select_own` (009),
   `POST /events` com rate limit, emissão no simulador e métricas
   Visualizações/Interações no dashboard, integrados em `main` (PRs #48 a #50).
-- Próxima fase: Fase 11 — Landing, i18n e acessibilidade (T052 a T055).
+- Fase 11: concluída (T052 a T055) — landing PT-PT com catálogo `pt-PT.ts`,
+  roadmap dos 5 itens fora MVP, proposta exemplo `travelpropose-demo-2026`
+  e E2E/axe da landing, integrados em `main` (PRs #52 a #54).
+  Produção em `https://travel-propose-mvp.vercel.app` com env vars corrigidas
+  e proposta exemplo válida (200).
+- Próxima fase: Fase 12 — Release e validação transversal (T056 a T059).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
