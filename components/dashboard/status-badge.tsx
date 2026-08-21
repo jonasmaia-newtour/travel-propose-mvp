@@ -1,4 +1,16 @@
+'use client';
+
+import type { ReactNode } from 'react';
 import type { ProposalStatus } from '@/domain/proposal/state-machine';
+import { Badge } from '@/components/ui/badge';
+import { 
+  FileText, 
+  PaperPlaneTilt, 
+  Eye, 
+  ArrowCounterClockwise, 
+  CheckCircle, 
+  Clock 
+} from '@phosphor-icons/react';
 
 const statusLabels: Record<ProposalStatus, string> = {
   draft: 'Rascunho',
@@ -9,11 +21,32 @@ const statusLabels: Record<ProposalStatus, string> = {
   expired: 'Expirada',
 };
 
+const statusVariants: Record<ProposalStatus, "secondary" | "default" | "success" | "warning" | "destructive"> = {
+  draft: 'secondary',
+  sent: 'default',
+  viewed: 'default',
+  revision_requested: 'warning',
+  approved: 'success',
+  expired: 'destructive',
+};
+
 export function StatusBadge({ status }: { status: ProposalStatus }) {
+  const iconProps = { size: 14, weight: "regular" as const, className: "mr-1 inline-block" };
+  
+  const iconMap: Record<ProposalStatus, ReactNode> = {
+    draft: <FileText {...iconProps} />,
+    sent: <PaperPlaneTilt {...iconProps} />,
+    viewed: <Eye {...iconProps} />,
+    revision_requested: <ArrowCounterClockwise {...iconProps} />,
+    approved: <CheckCircle {...iconProps} />,
+    expired: <Clock {...iconProps} />,
+  };
+
   return (
-    <span className="inline-flex items-center rounded-full border border-foreground/20 px-2.5 py-0.5 text-xs font-medium text-foreground/80">
+    <Badge variant={statusVariants[status]} className="font-medium">
+      {iconMap[status]}
       {statusLabels[status]}
-    </span>
+    </Badge>
   );
 }
 

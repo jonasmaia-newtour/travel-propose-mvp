@@ -9,13 +9,9 @@ import {
   ApprovalReceiptDialog,
   type PublicReceipt,
 } from '@/components/proposal/approval-receipt-dialog';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, ArrowCounterClockwise, Clock } from '@phosphor-icons/react';
 
-/**
- * Ações públicas da proposta (T046): aprovação e pedido de ajuste com os
- * respetivos diálogos, mais o aviso de expiração (prazo termina durante a
- * navegação ou o servidor devolve 409 expired). A fonte de verdade do total
- * é o servidor; o cliente apenas apresenta o recibo devolvido.
- */
 interface PublicActionsProps {
   proposal: PublicProposal;
   selection: PublicSelection;
@@ -92,57 +88,61 @@ export function PublicActions({ proposal, selection, token }: PublicActionsProps
 
   if (expired) {
     return (
-      <section
+      <div
         role="status"
         aria-live="polite"
-        className="rounded-lg border border-destructive/30 bg-destructive/5 p-4"
+        className="flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
       >
-        <h2 className="font-semibold">A proposta expirou</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          O prazo de validade terminou. Peça uma nova proposta à agência.
-        </p>
-      </section>
+        <Clock size={20} weight="regular" className="text-red-600 shrink-0" />
+        <span>A proposta expirou. O prazo de validade terminou.</span>
+      </div>
     );
   }
 
   const termsMissing = proposal.terms !== null && !termsAccepted;
 
   return (
-    <section aria-label="Confirmar proposta" className="space-y-4">
+    <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
       {proposal.terms !== null ? (
-        <label className="flex items-start gap-2 text-sm">
+        <label className="flex items-center gap-2 text-xs text-slate-gray">
           <input
             type="checkbox"
             checked={termsAccepted}
             onChange={(event) => setTermsAccepted(event.target.checked)}
-            className="mt-0.5 size-4 accent-accent"
+            className="size-4 rounded border-border text-royal-blue focus:ring-royal-blue"
           />
-          <span>Aceito as condições apresentadas na proposta.</span>
+          <span>Aceito as condições</span>
         </label>
       ) : null}
 
       {approvalStatus === 'error' && approvalError !== null ? (
-        <p role="alert" className="text-sm text-destructive">
+        <p role="alert" className="text-xs text-red-600">
           {approvalError}
         </p>
       ) : null}
 
-      <div className="flex flex-wrap gap-3">
-        <button
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => setAdjustmentOpen(true)}
+          className="border-border text-foreground hover:bg-muted/50"
+        >
+          <ArrowCounterClockwise size={16} weight="regular" className="mr-1.5" />
+          Pedir ajuste
+        </Button>
+        <Button
           type="button"
           onClick={approve}
           disabled={termsMissing || approvalStatus === 'submitting'}
-          className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground disabled:opacity-60"
+          variant="success"
+          size="default"
+          className="bg-aqua-green hover:bg-aqua-green/90 text-white font-semibold"
         >
+          <CheckCircle size={18} weight="regular" className="mr-2" />
           {approvalStatus === 'submitting' ? 'A aprovar…' : 'Aprovar proposta'}
-        </button>
-        <button
-          type="button"
-          onClick={() => setAdjustmentOpen(true)}
-          className="rounded-md border border-foreground/20 px-4 py-2 text-sm font-medium"
-        >
-          Pedir ajuste
-        </button>
+        </Button>
       </div>
 
       {adjustmentOpen ? (
@@ -157,6 +157,6 @@ export function PublicActions({ proposal, selection, token }: PublicActionsProps
       {receipt !== null ? (
         <ApprovalReceiptDialog open receipt={receipt} onClose={() => setReceipt(null)} />
       ) : null}
-    </section>
+    </div>
   );
 }

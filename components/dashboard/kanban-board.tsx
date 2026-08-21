@@ -20,25 +20,29 @@ export function KanbanBoard({
   proposals: ProposalListItem[];
 }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {columnOrder.map((status) => {
         const columnProposals = proposals.filter((proposal) => proposal.status === status);
         return (
           <section
             key={status}
             aria-label={statusLabels[status]}
-            className="rounded-lg border border-foreground/10 bg-muted/30 p-4"
+            className="flex flex-col rounded-xl border border-border bg-slate-50/50 p-4"
           >
-            <header className="mb-3 flex items-center justify-between">
-              <h2 className="text-sm font-medium text-card-foreground">{statusLabels[status]}</h2>
-              <span className="rounded-full bg-background px-2 py-0.5 text-xs text-muted-foreground">
+            <header className="mb-4 flex items-center justify-between pb-2 border-b border-border">
+              <h2 className="text-sm font-semibold text-royal-blue tracking-wide uppercase">
+                {statusLabels[status]}
+              </h2>
+              <span className="rounded-full bg-white px-2.5 py-0.5 text-xs font-medium text-slate-gray shadow-xs border border-border">
                 {countsByStatus[status]}
               </span>
             </header>
             {columnProposals.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Sem propostas.</p>
+              <div className="flex-1 flex items-center justify-center p-8 text-center text-sm text-slate-gray border border-dashed border-border rounded-lg bg-white/50">
+                Sem propostas nesta fase.
+              </div>
             ) : (
-              <ul className="space-y-3">
+              <ul className="space-y-3 flex-1">
                 {columnProposals.map((proposal) => (
                   <li key={proposal.id}>
                     <ProposalCard proposal={proposal} />

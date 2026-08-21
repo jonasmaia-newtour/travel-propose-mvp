@@ -1,32 +1,50 @@
+'use client';
+
 import type { DashboardMetrics } from '@/lib/proposals/dashboard-queries';
+import { Card } from '@/components/ui/card';
+import { 
+  FolderOpen, 
+  PaperPlaneTilt, 
+  CheckCircle, 
+  ArrowCounterClockwise, 
+  Eye, 
+  Lightning 
+} from '@phosphor-icons/react';
 
 function formatCount(value: number): string {
   return new Intl.NumberFormat('pt-PT').format(value);
 }
 
 export function MetricsCards({ metrics }: { metrics: DashboardMetrics }) {
-  const items: Array<{ label: string; value: number }> = [
-    { label: 'Total de propostas', value: metrics.total },
-    { label: 'Publicadas (em curso)', value: metrics.published },
-    { label: 'Aprovadas', value: metrics.approved },
-    { label: 'Pedidos de ajuste', value: metrics.pendingRevision },
-    { label: 'Visualizações', value: metrics.views },
-    { label: 'Interações', value: metrics.interactions },
+  const items = [
+    { label: 'Total de propostas', value: metrics.total, icon: FolderOpen, color: 'text-royal-blue' },
+    { label: 'Publicadas (em curso)', value: metrics.published, icon: PaperPlaneTilt, color: 'text-royal-blue' },
+    { label: 'Aprovadas', value: metrics.approved, icon: CheckCircle, color: 'text-aqua-green' },
+    { label: 'Pedidos de ajuste', value: metrics.pendingRevision, icon: ArrowCounterClockwise, color: 'text-amber-600' },
+    { label: 'Visualizações', value: metrics.views, icon: Eye, color: 'text-muted-foreground' },
+    { label: 'Interações', value: metrics.interactions, icon: Lightning, color: 'text-muted-foreground' },
   ];
 
   return (
     <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
-      {items.map((item) => (
-        <li
-          key={item.label}
-          className="rounded-lg border border-foreground/10 bg-card p-4"
-        >
-          <p className="text-sm text-muted-foreground">{item.label}</p>
-          <p className="mt-1 text-2xl font-semibold text-card-foreground">
-            {formatCount(item.value)}
-          </p>
-        </li>
-      ))}
+      {items.map((item) => {
+        const Icon = item.icon;
+        return (
+          <li key={item.label}>
+            <Card className="p-5 flex flex-col justify-between h-full bg-white hover:border-royal-blue/30 transition-all">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-gray">
+                  {item.label}
+                </span>
+                <Icon size={20} weight="regular" className={item.color} />
+              </div>
+              <p className="text-3xl font-bold tracking-tight text-royal-blue">
+                {formatCount(item.value)}
+              </p>
+            </Card>
+          </li>
+        );
+      })}
     </ul>
   );
 }

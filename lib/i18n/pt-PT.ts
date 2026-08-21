@@ -11,6 +11,7 @@ export const ptPT = {
   },
   landing: {
     hero: {
+      tagline: 'Plataforma SaaS B2B para Agências de Viagens',
       title: 'Propostas de viagem interativas, com aceite auditável',
       subtitle:
         'O TravelPropose substitui propostas estáticas e conversas dispersas por links seguros: o viajante simula opções, pede ajustes e aprova a combinação — tudo registado numa única fonte de verdade.',
