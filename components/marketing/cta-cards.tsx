@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { ptPT } from '@/lib/i18n/pt-PT';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { SignIn, Kanban, Eye } from '@phosphor-icons/react';
 
 const DEMO_PROPOSAL_TOKEN = 'travelpropose-demo-2026';
@@ -22,9 +23,12 @@ export function CtaCards() {
             <h2 className="text-lg font-semibold text-royal-blue mb-2">{login.title}</h2>
             <p className="text-sm text-slate-gray mb-6 leading-relaxed">{login.description}</p>
           </div>
-          <Button asChild className="w-full bg-royal-blue hover:bg-royal-blue/90 text-white">
-            <Link href={login.href}>{login.label}</Link>
-          </Button>
+          <Link
+            href={login.href}
+            className={cn(buttonVariants({ variant: 'default' }), 'w-full justify-center')}
+          >
+            {login.label}
+          </Link>
         </Card>
       </li>
       <li>
@@ -36,9 +40,12 @@ export function CtaCards() {
             <h2 className="text-lg font-semibold text-royal-blue mb-2">{dashboard.title}</h2>
             <p className="text-sm text-slate-gray mb-6 leading-relaxed">{dashboard.description}</p>
           </div>
-          <Button asChild variant="outline" className="w-full border-border text-foreground hover:bg-muted/50">
-            <Link href={dashboard.href}>{dashboard.label}</Link>
-          </Button>
+          <Link
+            href={dashboard.href}
+            className={cn(buttonVariants({ variant: 'outline' }), 'w-full justify-center')}
+          >
+            {dashboard.label}
+          </Link>
         </Card>
       </li>
       <li>
@@ -50,9 +57,13 @@ export function CtaCards() {
             <h2 className="text-lg font-semibold text-royal-blue mb-2">{proposal.title}</h2>
             <p className="text-sm text-slate-gray mb-6 leading-relaxed">{proposal.description}</p>
           </div>
-          <Button asChild className="w-full bg-aqua-green hover:bg-aqua-green/90 text-white">
-            <Link href={`/p/${DEMO_PROPOSAL_TOKEN}`}>{proposal.label}</Link>
-          </Button>
+          {/* Cor #00845a garante ratio 4.6:1 com branco (WCAG AA) — aqua-green (#00a86b) ficava em 3.08:1 */}
+          <Link
+            href={`/p/${DEMO_PROPOSAL_TOKEN}`}
+            className={cn(buttonVariants({ variant: 'default' }), 'w-full justify-center bg-[#00845a] hover:bg-[#006e4b]')}
+          >
+            {proposal.label}
+          </Link>
         </Card>
       </li>
     </ul>
