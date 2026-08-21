@@ -164,6 +164,57 @@ export type Database = {
           },
         ]
       }
+      proposal_events: {
+        Row: {
+          country: string | null
+          created_at: string
+          device: string | null
+          id: string
+          payload: Json | null
+          proposal_id: string
+          session_hash: string
+          tenant_id: string
+          type: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          id?: string
+          payload?: Json | null
+          proposal_id: string
+          session_hash: string
+          tenant_id: string
+          type: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          device?: string | null
+          id?: string
+          payload?: Json | null
+          proposal_id?: string
+          session_hash?: string
+          tenant_id?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposal_events_proposal_id_fkey"
+            columns: ["proposal_id"]
+            isOneToOne: false
+            referencedRelation: "proposals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "proposal_events_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       proposal_approval_snapshots: {
         Row: {
           created_at: string
@@ -387,6 +438,17 @@ export type Database = {
         Returns: Database["public"]["Enums"]["user_role"]
       }
       get_public_proposal: { Args: { p_token_hash: string }; Returns: Json }
+      record_proposal_event: {
+        Args: {
+          p_token_hash: string
+          p_type: string
+          p_session_id: string
+          p_payload: Json | null
+          p_device: string | null
+          p_country: string | null
+        }
+        Returns: Json
+      }
       request_public_adjustment: {
         Args: { p_message: string; p_session_id: string; p_token_hash: string }
         Returns: Json
