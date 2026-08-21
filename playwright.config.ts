@@ -25,7 +25,7 @@ export default defineConfig({
     },
     {
       name: "anonymous",
-      testMatch: /(accessibility|dashboard-rbac)\.spec\.ts/,
+      testMatch: /(accessibility|dashboard-rbac|landing)\.spec\.ts/,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1440, height: 900 },
