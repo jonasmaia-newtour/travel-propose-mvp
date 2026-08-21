@@ -10,10 +10,12 @@ export function MetricsCards({ metrics }: { metrics: DashboardMetrics }) {
     { label: 'Publicadas (em curso)', value: metrics.published },
     { label: 'Aprovadas', value: metrics.approved },
     { label: 'Pedidos de ajuste', value: metrics.pendingRevision },
+    { label: 'Visualizações', value: metrics.views },
+    { label: 'Interações', value: metrics.interactions },
   ];
 
   return (
-    <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
       {items.map((item) => (
         <li
           key={item.label}
