@@ -144,7 +144,8 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
   e E2E/axe da landing, integrados em `main` (PRs #52 a #54).
   Produção em `https://travel-propose-mvp.vercel.app` com env vars corrigidas
   e proposta exemplo válida (200).
-- Próxima fase: Fase 12 — Release e validação transversal (T056 a T059).
+- Fase 12: concluída (T056 a T059) — auditoria RLS e RPCs, verificação de qualidade (lint, typecheck, 155 testes unitários, build ok), validação de quickstart e documentação de release.
+- Próxima fase: Fase 13 — Migração para shadcn/ui (`components/ui/`) (backlog).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
