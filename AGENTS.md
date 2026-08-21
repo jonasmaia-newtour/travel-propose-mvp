@@ -134,7 +134,12 @@ O produto deve ser autónomo no domínio de negócio: não haverá integrações
   (ajuste→republicação→aceite), integrados em `main` (PRs #33 a #46).
   A demo em produção expirou a 2026-08-21 17:04 UTC — o link da landing
   devolve 404; a proposta demo definitiva é a T054.
-- Próxima fase: Fase 10 — Telemetria e indicadores (T048 a T051).
+- Fase 10: concluída (T048 a T051) — telemetria e indicadores:
+  schema `telemetryEventSchema`, tabela `proposal_events` (008) com função
+  `record_proposal_event` e política `proposal_events_select_own` (009),
+  `POST /events` com rate limit, emissão no simulador e métricas
+  Visualizações/Interações no dashboard, integrados em `main` (PRs #48 a #50).
+- Próxima fase: Fase 11 — Landing, i18n e acessibilidade (T052 a T055).
 
 <!-- BEGIN:nextjs-agent-rules -->
 
